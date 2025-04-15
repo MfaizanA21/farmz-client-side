@@ -1,0 +1,48 @@
+<form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <h2 class="form-title">Sign Up</h2>
+
+  <div class="form-group horizontal-group">
+    <div class="form-field">
+      <label for="fname">First Name</label>
+      <input id="fname" type="text" placeholder="John" class="input" [formControl]="signupForm.controls.fname"/>
+    </div>
+    <div class="form-field">
+      <label for="lname">Last Name</label>
+      <input id="lname" type="text" placeholder="Doe" class="input" [formControl]="signupForm.controls.lname"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="xyz@gmail.com" class="input" [formControl]="signupForm.controls.email"/>
+    <div>
+      @if (!emailValidate) {
+        <p>email is invalid</p>
+      }
+    </div>
+    </div>
+    <div>
+    <div class="form-field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="..." class="input" [formControl]="signupForm.controls.password"/>
+    </div>
+    <div class="form-field">
+      <label for="cpassword">Confirm Password</label>
+      <input id="cpassword" type="password" placeholder="..." class="input" [formControl]="signupForm.controls.cpassword"/>
+    </div>
+    @if (!passwordValidate) {
+      <p>password is invalid</p>
+    }
+    @if (!confirmPasswordValidate) {
+      <p> password doesnot match</p>
+    }
+  </div>
+  </div>
+
+  <div class="action-buttons">
+    <button type="submit" class="submit-btn">Create Account</button>
+    <a class="text-btn" [routerLink]="['']">Already have an account?</a>
+  </div>
+  
+</form>

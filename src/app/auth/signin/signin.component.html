@@ -1,0 +1,25 @@
+<form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2 class="form-title">Sign In</h2>
+    <div class="form-group">
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="123@example.com" class="input" [formControl]="form.controls.email" />
+      </div>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="...." class="input" [formControl]="form.controls.password"/>
+      </div>
+      <button type="submit" class="submit-btn">Login</button>
+    </div>
+    <a class="text-btn" [routerLink]="['/signup']">Create an account</a>
+
+
+    @if (!isMailValid) {
+        <p>Please enter valid Email</p>
+    }
+
+    @if (!isPasswordValid) {
+        <p>Please enter valid Password</p>
+    }
+  </form>
+  
