@@ -5,10 +5,22 @@
         <label for="email">Email</label>
         <input id="email" type="email" placeholder="123@example.com" class="input" [formControl]="form.controls.email" />
       </div>
-      <div class="form-field">
+      <div class="form-field password-field">
         <label for="password">Password</label>
-        <input id="password" type="password" placeholder="...." class="input" [formControl]="form.controls.password"/>
+        <div class="password-input-wrapper">
+          <input
+            id="password"
+            [type]="passwordVisibility() ? 'text' : 'password'"
+            placeholder="...."
+            class="input"
+            [formControl]="form.controls.password"
+          />
+          <button type="button" class="eye-toggle" (click)="togglePasswordVisibility()">
+            {{ passwordVisibility() ? '🙈' : '👁️' }}
+          </button>
+        </div>
       </div>
+      
       <button type="submit" class="submit-btn">Login</button>
     </div>
     <a class="text-btn" [routerLink]="['/signup']">Create an account</a>

@@ -1,0 +1,28 @@
+<form class="signup-form" [formGroup]="createBlogForm" (ngSubmit)="onCreateBlog()">
+    <h2 class="form-title">Create Blog</h2>
+  
+    <div class="form-group">
+      <div class="form-field">
+        <label for="title">Title</label>
+        <input id="title" type="text" class="input" [formControl]="createBlogForm.controls.title" placeholder="Enter blog title" />
+      </div>
+  
+      <div class="form-field">
+        <label for="content">Content</label>
+        <textarea id="content" class="input" [formControl]="createBlogForm.controls.content" rows="5" placeholder="Write your blog content here..."></textarea>
+      </div>
+  
+      <div class="form-field">
+       <!--  <label for="datePosted">Date Posted</label>
+        <input id="datePosted" type="date" class="input" /> -->
+    </div>
+  
+      <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input id="image" type="file" (change)="onImageSelected($event)" accept="image/*" />
+      </div>
+    </div>
+  
+    <button type="submit" class="submit-btn">Submit Blog</button>
+  </form>
+  

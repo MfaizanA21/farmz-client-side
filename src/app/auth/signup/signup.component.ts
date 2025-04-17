@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../user.model';
-import { SignupService } from './signup.service';
+import { AuthService } from '../auth.service';
 
 function matchValues(controlValue1: string, controlValue2: string) {
   return (control: AbstractControl) => {
@@ -21,14 +21,14 @@ function matchValues(controlValue1: string, controlValue2: string) {
 @Component({
   selector: 'app-signup',
   standalone: true,
-  providers: [SignupService],
+  providers: [AuthService],
   imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
   accountCreated = signal(false);
-  private signupService = inject(SignupService);
+  private authService = inject(AuthService);
   private router = inject(Router)
 
   signupForm = new FormGroup({
@@ -85,7 +85,7 @@ export class SignupComponent {
       email: this.signupForm.value.email!,
       password: this.signupForm.value.password!
     }
-    this.signupService.createUser(user).subscribe({
+    this.authService.createUser(user).subscribe({
       next: () => {
         this.signupForm.reset();
         this.accountCreated.set(true);
