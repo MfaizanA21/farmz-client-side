@@ -1,37 +1,23 @@
 <div class="container">
-    <button class="create-blog-btn" (click)="onCreateBlog()">Create Blog</button>
-    <h1>Your Blogs</h1>
-    <div class="blog-grid">
-      <!-- Hardcoded blog entries -->
-      <div class="blog-container">
-        <h3 class="blog-title">Blog Title 1</h3>
-        <div class="blog-image">
-          <img src="https://via.placeholder.com/300" alt="Blog Image 1" />
+  <button class="create-blog-btn" (click)="onCreateBlog()">Create Blog</button>
+  <h1>Your Blogs</h1>
+  <div class="blog-grid">
+    @if (showMessage()) {
+      <h3>Please sign in to create a blog!</h3>
+    }
+    @if (userBlogs().length === 0) {
+      <h3>No Blogs Found</h3>
+    } @else { 
+      @for (blog of userBlogs(); track $index) {
+        <div class="blog-container">
+          <h3 class="blog-title">{{ blog.title }}</h3>
+          <div class="blog-image">
+            <img [src]="'data:image/png;base64,' + blog.image" alt="Blog Image" />
+          </div>
+          <p class="blog-content">{{ blog.content }}</p>
+          <p class="blog-user">Author: {{ blog.firstName }} {{ blog.lastName }}</p>
         </div>
-        <p class="blog-content">
-          This is the content of the first blog. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel urna mi.
-        </p>
-      </div>
-  
-      <div class="blog-container">
-        <h3 class="blog-title">Blog Title 2</h3>
-        <div class="blog-image">
-          <img src="https://via.placeholder.com/300" alt="Blog Image 2" />
-        </div>
-        <p class="blog-content">
-          This is the content of the second blog. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-        </p>
-      </div>
-  
-      <div class="blog-container">
-        <h3 class="blog-title">Blog Title 3</h3>
-        <div class="blog-image">
-          <img src="https://via.placeholder.com/300" alt="Blog Image 3" />
-        </div>
-        <p class="blog-content">
-          This is the content of the third blog. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
-    </div>
+      }
+    }
   </div>
-  
+</div>

@@ -25,7 +25,7 @@ export class SigninComponent implements OnInit {
       validators: [Validators.email, Validators.required],
     }),
     password: new FormControl('', {
-      validators: [Validators.min(6), Validators.required],
+      validators: [Validators.required],
     }),
   });
 
@@ -58,9 +58,15 @@ export class SigninComponent implements OnInit {
     this.passwordVisibility.set(!this.passwordVisibility());
   }
 
-  onSubmit() {
-    if (this.form.invalid) return;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
+
+  onSubmit() {
+    if (this.form.invalid) {
+      this.errorMessage = 'Please Fill out the form correctly.'
+      return;
+    }
     const email = this.form.value.email;
     const password = this.form.value.password;
 
@@ -69,11 +75,11 @@ export class SigninComponent implements OnInit {
         const token = response.accessToken;
         console.log(token);
         localStorage.setItem('accessToken', token);
-        alert(`Successfully loggedIn: ${token}`);
+        this.successMessage = `Successfully logged in!`;
         this.router.navigate(['home']);
       },
       error: (error) => {
-        alert(error);
+        this.errorMessage = `Login failed: ${error.message || 'Unknown error'}`;
       },
     });
     console.log(email, password);

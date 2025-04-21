@@ -1,27 +1,68 @@
-import { HttpClient } from '@angular/common/http';
-import { contentChild, inject, Injectable } from '@angular/core';
-import { CreateBlogDto } from './create-blog.dto';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
+import { CreateBlogDto } from './create-blog.dto'; // Adjust path as needed
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class BlogService {
-  httptClient = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/blog';
 
-  createBlog(createBlogDto: CreateBlogDto ) {
-    const dateToday = new Date(Date.now());
+  constructor(private httpClient: HttpClient) {}
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('accessToken');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  }
+
+  createBlog(createBlogDto: CreateBlogDto, userId: string) {
+    const dateToday = new Date();
     const formattedDate = dateToday.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
 
-    return this.httptClient.post('http://localhost:3000/blog/create-blog', {
-        title: createBlogDto.title,
-        content: createBlogDto.content,
-        image: createBlogDto.image,
-        datePosted: formattedDate
-    }).pipe (catchError((error) => {
-        return throwError(() => new Error(error))
-    }))
+    return this.httpClient
+      .post(
+        `${this.apiUrl}/create-blog`,
+        {
+          title: createBlogDto.title,
+          content: createBlogDto.content,
+          image: createBlogDto.image,
+          datePosted: formattedDate,
+          userId: userId,
+        },
+        { headers: this.getAuthHeaders() }
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error creating blog:', error);
+          return throwError(
+            () => new Error('Failed to create blog: ' + error.message)
+          );
+        })
+      );
+  }
+
+  getUserBlogs(userId: string) {
+    return this.httpClient
+      .get(
+        `${this.apiUrl}/get-blogs-for-user`, {
+          headers: this.getAuthHeaders(),
+          params: { userId },
+        })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching blogs:', error);
+          return throwError(
+            () => new Error('Failed to fetch blogs: ' + error.message)
+          );
+        })
+      );
   }
 }

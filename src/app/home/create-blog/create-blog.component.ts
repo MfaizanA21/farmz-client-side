@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,7 @@ import {
 import { BlogService } from '../blog.service';
 import { CreateBlogDto } from '../create-blog.dto';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-create-blog',
@@ -19,6 +20,17 @@ import { Router } from '@angular/router';
   styleUrl: './create-blog.component.css',
 })
 export class CreateBlogComponent {
+  userId = signal('');
+
+  constructor() {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      const decoded: any = jwtDecode(accessToken);
+      this.userId.set(decoded.userId);
+    }
+  }
+
   blogService = inject(BlogService);
   router = inject(Router);
 
@@ -59,10 +71,10 @@ export class CreateBlogComponent {
       image: image ? image : undefined,
       content: content!,
     };
-    this.blogService.createBlog(createBlogDto).subscribe({
+    this.blogService.createBlog(createBlogDto, this.userId()).subscribe({
       next: () => {
         this.createBlogForm.reset();
-        this.router.navigate(['home'])
+        this.router.navigate(['home']);
         alert('blog created successfully!');
       },
       error: () => {
