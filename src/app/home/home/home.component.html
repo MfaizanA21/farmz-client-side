@@ -1,23 +1,18 @@
 <div class="container">
+  @if(showLoginButton()) {
+    <button class="logout-btn" (click)="onLoginClicked()">Login</button>
+  } @else {
+    <button class="logout-btn" (click)="onLogout()">Logout</button>
+    
+  }
   <button class="create-blog-btn" (click)="onCreateBlog()">Create Blog</button>
   <h1>Your Blogs</h1>
-  <div class="blog-grid">
-    @if (showMessage()) {
-      <h3>Please sign in to create a blog!</h3>
-    }
-    @if (userBlogs().length === 0) {
-      <h3>No Blogs Found</h3>
-    } @else { 
-      @for (blog of userBlogs(); track $index) {
-        <div class="blog-container">
-          <h3 class="blog-title">{{ blog.title }}</h3>
-          <div class="blog-image">
-            <img [src]="'data:image/png;base64,' + blog.image" alt="Blog Image" />
-          </div>
-          <p class="blog-content">{{ blog.content }}</p>
-          <p class="blog-user">Author: {{ blog.firstName }} {{ blog.lastName }}</p>
-        </div>
-      }
-    }
-  </div>
+  @if (showMessage()) {
+  <h3>Please sign in to create a blog!</h3>
+  }
+  <app-blog [userBlogs]="userBlogs()" [showBlogMessage]="showBlogsMessage()"/>
+</div>
+<div class="container">
+  <h1> Explore</h1>
+  <app-other-blog [userId]="userId()"/>
 </div>

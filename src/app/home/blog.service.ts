@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { CreateBlogDto } from './create-blog.dto'; // Adjust path as needed
+import { GetBlogModel } from '../models/get-blogs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,14 +52,29 @@ export class BlogService {
 
   getUserBlogs(userId: string) {
     return this.httpClient
-      .get(
-        `${this.apiUrl}/get-blogs-for-user`, {
-          headers: this.getAuthHeaders(),
-          params: { userId },
-        })
+      .get<GetBlogModel[]>(`${this.apiUrl}/get-blogs-for-user`, {
+        headers: this.getAuthHeaders(),
+        params: { userId },
+      })
       .pipe(
         catchError((error) => {
           console.error('Error fetching blogs:', error);
+          return throwError(
+            () => new Error('Failed to fetch blogs: ' + error.message)
+          );
+        })
+      );
+  }
+
+  getOtherBlogs(userId: string) {
+    return this.httpClient
+      .get<GetBlogModel[]>(`${this.apiUrl}/get-all-blogs`, {
+        headers: this.getAuthHeaders(),
+        params: { userId },
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching blogs: ', error);
           return throwError(
             () => new Error('Failed to fetch blogs: ' + error.message)
           );

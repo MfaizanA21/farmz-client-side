@@ -1,0 +1,18 @@
+<div class="blog-grid">
+  @if (userBlogs().length === 0) {
+    @if(showBlogMessage()) {
+      <h3>Login in get your blogs</h3>
+    } @else {
+      <h3>No Blogs Found</h3>
+    }
+  } @else { @for (blog of userBlogs(); track $index) {
+    <div class="blog-container">
+      <h3 class="blog-title">{{ blog.title }}</h3>
+      <div class="blog-image">
+        <img [src]="'data:image/png;base64,' + blog.image" alt="Blog Image" />
+      </div>
+      <p class="blog-content">{{ blog.content | slice : 0 : 50 }}...</p>
+      <p class="blog-user">Author: {{ blog.firstName }} {{ blog.lastName }}</p>
+    </div>
+  } }
+</div>

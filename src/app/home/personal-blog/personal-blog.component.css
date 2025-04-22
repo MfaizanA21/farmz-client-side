@@ -1,0 +1,94 @@
+/* Individual Blog Container */
+.blog-container {
+  background-color: #c6d9d7;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto; /* Allow container height to adjust based on content */
+  min-height: 400px; /* Minimum height to ensure consistent layout */
+  overflow: hidden;
+}
+
+/* Title Styling */
+.blog-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2f4538;
+  text-transform: capitalize;
+  margin-bottom: 16px;
+}
+
+/* Image Styling */
+.blog-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  width: 100%; /* Ensure the image covers the full width of the container */
+  height: 200px; /* Set a fixed height for the image */
+  overflow: hidden;
+}
+
+.blog-image img {
+  width: 100%;  /* Stretch the image to fill the container width */
+  height: 100%; /* Stretch the image to fill the container height */
+  object-fit: cover; /* Ensure the image covers the entire container while maintaining aspect ratio */
+}
+
+/* Truncated content styling */
+.blog-content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3; /* Limit to 3 lines, adjust as needed */
+  font-size: 14px;
+  color: #436450;
+  line-height: 1.6;
+  font-weight: 400;
+  white-space: normal; /* Allow wrapping when content exceeds one line */
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Creates a responsive grid */
+  gap: 16px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Responsiveness for Smaller Screens */
+@media (max-width: 768px) {
+  .blog-container {
+    width: 90%;
+    padding: 16px;
+    height: 350px; /* Keep the same height on smaller screens */
+  }
+
+  .blog-title {
+    font-size: 26px;
+  }
+
+  .blog-content {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-container {
+    width: 100%;
+    padding: 12px;
+    height: 350px; /* Keep the same height on very small screens */
+  }
+
+  .blog-title {
+    font-size: 20px;
+  }
+
+  .blog-content {
+    font-size: 12px;
+  }
+}
