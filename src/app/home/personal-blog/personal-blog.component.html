@@ -1,12 +1,12 @@
 <div class="blog-grid">
   @if (userBlogs().length === 0) {
-    @if(showBlogMessage()) {
+    @if(showBlogLoginMessage()) {
       <h3>Login in get your blogs</h3>
     } @else {
       <h3>No Blogs Found</h3>
     }
   } @else { @for (blog of userBlogs(); track $index) {
-    <div class="blog-container">
+    <div class="blog-container" (click)="onContainerClick(blog.id)">
       <h3 class="blog-title">{{ blog.title }}</h3>
       <div class="blog-image">
         <img [src]="'data:image/png;base64,' + blog.image" alt="Blog Image" />

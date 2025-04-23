@@ -66,10 +66,25 @@ export class BlogService {
       );
   }
 
+  getBlogById(id: string) {
+    return this.httpClient
+      .get<GetBlogModel>(`${this.apiUrl}/get-blog`, {
+        params: { id },
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching blogs:', error);
+          return throwError(
+            () => new Error('Failed to fetch details: ' + error.message)
+          );
+        })
+      );
+  }
+
   getOtherBlogs(userId: string) {
     return this.httpClient
       .get<GetBlogModel[]>(`${this.apiUrl}/get-all-blogs`, {
-        headers: this.getAuthHeaders(),
+        // headers: this.getAuthHeaders(),
         params: { userId },
       })
       .pipe(
@@ -80,5 +95,19 @@ export class BlogService {
           );
         })
       );
+  }
+
+  deleteBlog(id: string) {
+    return this.httpClient.delete<string>(`${this.apiUrl}/delete-blog/${id}`, {
+      headers: this.getAuthHeaders()
+    })
+    .pipe(
+      catchError((error) => {
+        console.error('Error fetching blogs:', error);
+        return throwError(
+          () => new Error('Failed to fetch blogs: ' + error.message)
+        );
+      })
+    );
   }
 }

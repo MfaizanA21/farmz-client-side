@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, Input, input } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, input } from '@angular/core';
 import { GetBlogModel } from '../../models/get-blogs.model';
 import { SlicePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
@@ -10,13 +11,15 @@ import { SlicePipe } from '@angular/common';
   styleUrl: './personal-blog.component.css'
 })
 export class PersonalBlogComponent implements AfterViewInit{
-  // @Input({ required: true }) userBlogs!: GetBlogModel[];
   userBlogs = input<GetBlogModel[]>([])
-  showBlogMessage = input<boolean>(false);
-  // blogsMessage = input<boolean>(false);
+  showBlogLoginMessage = input<boolean>(false);
+  router = inject(Router)
   ngAfterViewInit(): void {
     console.log("after view" + this.userBlogs().length)
-    console.log(this.showBlogMessage())
+    console.log(this.showBlogLoginMessage())
   }
-
+  onContainerClick(id: string) {
+    console.log(`${id} blog clicked by user`)
+    this.router.navigate([`view-blog/${id}`]);
+  }
 }

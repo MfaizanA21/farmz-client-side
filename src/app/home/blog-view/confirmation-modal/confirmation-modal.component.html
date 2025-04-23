@@ -1,0 +1,9 @@
+@if (isVisible()) {
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h3>Do you really want to delete this blog?</h3>
+    <button (click)="onConfirm()">Yes</button>
+    <button (click)="onCancel()">No</button>
+  </div>
+</div>
+}

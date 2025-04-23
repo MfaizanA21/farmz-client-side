@@ -4,6 +4,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { HomeComponent } from './home/home/home.component';
 import { CreateBlogComponent } from './home/create-blog/create-blog.component';
 import { authGuard } from './auth.guard';
+import { BlogViewComponent } from './home/blog-view/blog-view.component';
 
 export const routes: Routes = [
     {
@@ -26,5 +27,10 @@ export const routes: Routes = [
         component: CreateBlogComponent,
         title: 'Create Blog',
         canActivate: [authGuard]
+    },
+    {
+        path:'view-blog/:id',
+        component: BlogViewComponent,
+        title: 'Blog View'
     }
 ];

@@ -1,0 +1,35 @@
+<form class="create-blog-form" [formGroup]="editBlogForm" (ngSubmit)="onUpdateBlog()">
+    <h2 class="form-title">Edit Blog</h2>
+  
+    <div class="form-group">
+      <div class="form-field">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          class="input"
+          [formControl]="editBlogForm.controls.title"
+          placeholder="Enter blog title"
+        />
+        @if (editBlogForm.controls.title.touched && editBlogForm.controls.title.errors?.['required']) {
+          <p>Title is required</p>
+        }
+      </div>
+  
+      <div class="form-field">
+        <label for="content">Content</label>
+        <textarea
+          id="content"
+          class="input"
+          [formControl]="editBlogForm.controls.content"
+          rows="5"
+          placeholder="Write your blog content here..."
+        ></textarea>
+        @if (editBlogForm.controls.content.touched && editBlogForm.controls.content.errors?.['required']) {
+          <p>Content is required</p>
+        }
+      </div>
+    </div>
+  
+    <button type="submit" class="submit-btn" [disabled]="editBlogForm.invalid">Update Blog</button>
+  </form>

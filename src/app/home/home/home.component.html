@@ -10,9 +10,9 @@
   @if (showMessage()) {
   <h3>Please sign in to create a blog!</h3>
   }
-  <app-blog [userBlogs]="userBlogs()" [showBlogMessage]="showBlogsMessage()"/>
+  <app-blog [userBlogs]="userBlogs()" [showBlogLoginMessage]="showBlogsLoginMessage()"/>
 </div>
 <div class="container">
-  <h1> Explore</h1>
-  <app-other-blog [userId]="userId()"/>
+  <h1> Explore </h1>
+  <app-blog [userBlogs]="otherBlogs()"/>
 </div>

@@ -13,7 +13,6 @@ function matchValues(controlValue1: string, controlValue2: string) {
     if(val1 === val2) {
       return null;
     }
-
     return {valuesNotEqual: true};
   }
 }

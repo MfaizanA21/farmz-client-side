@@ -1,15 +1,14 @@
-import { Component, inject, OnInit, output, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BlogService } from '../blog.service';
 import { GetBlogModel } from '../../models/get-blogs.model';
 import { PersonalBlogComponent } from '../personal-blog/personal-blog.component';
-import { OtherBlogComponent } from '../other-blog/other-blog.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PersonalBlogComponent, OtherBlogComponent],
+  imports: [PersonalBlogComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -22,7 +21,7 @@ export class HomeComponent implements OnInit {
   otherBlogs = signal<GetBlogModel[]>([]);
   showMessage = signal(false);
   showLoginButton = signal(false);
-  showBlogsMessage = signal<boolean>(false);
+  showBlogsLoginMessage = signal<boolean>(false);
 
   constructor() {
     const accessToken = localStorage.getItem('accessToken');
@@ -32,7 +31,7 @@ export class HomeComponent implements OnInit {
       this.userId.set(decoded.userId);
     } else {
       this.showLoginButton.set(true);
-      this.showBlogsMessage.set(true);
+      this.showBlogsLoginMessage.set(true);
     }
   }
 
@@ -40,6 +39,7 @@ export class HomeComponent implements OnInit {
     if (!this.showLoginButton()) {
       this.getUserBlogs();
     }
+    this.getOtherBlogs();
   }
   
   onCreateBlog() {
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUserBlogs() {
-    const res = this.blogService.getUserBlogs(this.userId()).subscribe({
+    this.blogService.getUserBlogs(this.userId()).subscribe({
       next: (response) => {
         console.log(response.length);
         this.userBlogs.set(Array.isArray(response) ? response : []);
@@ -82,4 +82,5 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+
 }
