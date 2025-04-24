@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home/home.component';
 import { CreateBlogComponent } from './home/create-blog/create-blog.component';
 import { authGuard } from './auth.guard';
 import { BlogViewComponent } from './home/blog-view/blog-view.component';
+import { EditBlogComponent } from './home/edit-blog/edit-blog.component';
 
 export const routes: Routes = [
     {
@@ -32,5 +33,11 @@ export const routes: Routes = [
         path:'view-blog/:id',
         component: BlogViewComponent,
         title: 'Blog View'
+    },
+    {
+        path:'edit-blog/:id',
+        component: EditBlogComponent,
+        title: 'Edit Blog'
     }
+
 ];

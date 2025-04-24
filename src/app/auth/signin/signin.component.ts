@@ -30,6 +30,8 @@ export class SigninComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    localStorage.removeItem('accessToken');
+
     this.form.valueChanges.subscribe({
       next: (value) => {
         console.log('email: ', value.email);

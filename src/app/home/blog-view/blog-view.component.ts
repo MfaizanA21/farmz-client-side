@@ -62,6 +62,7 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
 
   onEditClick() {
     console.log('Edit button is clicked');
+    this.router.navigate([`edit-blog/${this.blog?.id}`])
   }
 
   onDeleteClick() {

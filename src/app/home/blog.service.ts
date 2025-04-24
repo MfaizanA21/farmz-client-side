@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { CreateBlogDto } from './create-blog.dto'; // Adjust path as needed
 import { GetBlogModel } from '../models/get-blogs.model';
+import { EditBlogDto } from '../models/edit-blog.model';
 
 @Injectable({
   providedIn: 'root',
@@ -98,16 +99,37 @@ export class BlogService {
   }
 
   deleteBlog(id: string) {
-    return this.httpClient.delete<string>(`${this.apiUrl}/delete-blog/${id}`, {
-      headers: this.getAuthHeaders()
-    })
-    .pipe(
-      catchError((error) => {
-        console.error('Error fetching blogs:', error);
-        return throwError(
-          () => new Error('Failed to fetch blogs: ' + error.message)
-        );
+    return this.httpClient
+      .delete<string>(`${this.apiUrl}/delete-blog/${id}`, {
+        headers: this.getAuthHeaders(),
       })
-    );
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching blogs:', error);
+          return throwError(
+            () => new Error('Failed to fetch blogs: ' + error.message)
+          );
+        })
+      );
+  }
+
+  editBlog(id: string, editBlogDto: EditBlogDto) {
+    return this.httpClient
+      .patch<string>(
+        `${this.apiUrl}/edit-blog/${id}`, // Correctly sending id in the URL path
+        { title: editBlogDto.title, content: editBlogDto.content },
+        {
+          headers: this.getAuthHeaders(),
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200) {
+            return throwError(() => new Error('Failed to update blog: ' + error.message));
+          } else {
+            // If response is 200 but you want to handle it in a specific way, you can throw an error here manually if needed
+            return throwError(() => new Error('Unexpected error occurred.'));
+          }}
+      ))
   }
 }

@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     }
     this.getOtherBlogs();
   }
-  
+
   onCreateBlog() {
     if (!this.userId()) {
       this.showMessage.set(true);
